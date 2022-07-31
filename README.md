@@ -1,0 +1,3 @@
+- did the webpack cli setup: `npx webpack-cli init` (webpack cli installed globally).
+- installed the babel cli locally and created an npm script `babel-build` to do just the transpilation without minification.
+- installed jest locally.
