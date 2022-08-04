@@ -2,4 +2,4 @@
 - installed the babel cli locally and created an npm script `babel-build` to do just the transpilation without minification.
 - installed jest locally.
 - To transpile es6 `import` statements to nodejs `require()` statements, `"modules": "cjs"` is specified in `.babelrc`
-- To set up debugging I followed this these instructions: https://github.com/jherax/vscode-recipes/tree/master/debugging-jest-tests
+- To set up Jest debugging I followed this these instructions: https://github.com/jherax/vscode-recipes/tree/master/debugging-jest-tests
