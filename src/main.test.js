@@ -1,51 +1,39 @@
-import {capitalize, reverse, caesarCipher} from './main.js'
+import {shipFactory} from './main.js';
 
-test('first letter of word is capital', () => {
-    expect(capitalize('yeet')).toMatch('Yeet');
+test('hitArr is correct length', () => {
+    expect(shipFactory(5).hitArr.length).toBe(5);
 });
 
-test('one letter', () => {
-    expect(reverse('a')).toMatch('a');
+test('hit changes the correct position', () => {
+    const ship = shipFactory(5);
+    ship.hit(2);
+    expect(ship.hitArr[2]).toBe(true);
 });
 
-test('two letters', () => {
-    expect(reverse('be')).toMatch('eb');
+test('hit doesnt change other positions', () => {
+    const ship = shipFactory(5);
+    ship.hit(2);
+    expect(ship.hitArr[0]).toBe(false);
+    expect(ship.hitArr[1]).toBe(false);
+    expect(ship.hitArr[3]).toBe(false);
+    expect(ship.hitArr[4]).toBe(false);
+})
+
+test('sunk returns true when all positions are hit', () => {
+    const ship = shipFactory(5);
+    ship.hit(0);
+    ship.hit(1);
+    ship.hit(2);
+    ship.hit(3);
+    ship.hit(4);
+    expect(ship.isSunk()).toBe(true);
 });
 
-test('three letters', () => {
-    expect(reverse('bed')).toMatch('deb');
-});
-
-test('four letters', () => {
-    expect(reverse('yeet')).toMatch('teey');
-});
-
-test('test basic +1', () => {
-    expect(caesarCipher('abcdef',1)).toMatch('bcdefg');
-});
-
-test('test basic -1', () => {
-    expect(caesarCipher('bcdefg',-1)).toMatch('abcdef');
-});
-
-test('test basic +6', () => {
-    expect(caesarCipher('bcdefg', 6)).toMatch('hijklm');
-});
-
-test('test spaces', () => {
-    expect(
-        caesarCipher('hi the name is bum', 7)
-    ).toMatch('op aol uhtl pz ibt');
-});
-
-test('test z wrap', () => {
-    expect(caesarCipher('zebra', 3)).toMatch('cheud');
-});
-
-test('test case preservation', () => {
-    expect(caesarCipher('Hello There', 9)).toMatch('Qnuux Cqnan');
-});
-
-test('test punctuation', () => {
-    expect(caesarCipher('yes; sir!', 7)).toMatch('flz; zpy!');
+test('sunk doesnt return true when all positions arent hit', () => {
+    const ship = shipFactory(5);
+    ship.hit(0);
+    ship.hit(1);
+    ship.hit(3);
+    ship.hit(4);
+    expect(ship.isSunk()).toBe(false);
 });

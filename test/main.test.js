@@ -2,41 +2,36 @@
 
 var _main = require("./main.js");
 
-test('first letter of word is capital', () => {
-  expect((0, _main.capitalize)('yeet')).toMatch('Yeet');
+test('hitArr is correct length', () => {
+  expect((0, _main.shipFactory)(5).hitArr.length).toBe(5);
 });
-test('one letter', () => {
-  expect((0, _main.reverse)('a')).toMatch('a');
+test('hit changes the correct position', () => {
+  const ship = (0, _main.shipFactory)(5);
+  ship.hit(2);
+  expect(ship.hitArr[2]).toBe(true);
 });
-test('two letters', () => {
-  expect((0, _main.reverse)('be')).toMatch('eb');
+test('hit doesnt change other positions', () => {
+  const ship = (0, _main.shipFactory)(5);
+  ship.hit(2);
+  expect(ship.hitArr[0]).toBe(false);
+  expect(ship.hitArr[1]).toBe(false);
+  expect(ship.hitArr[3]).toBe(false);
+  expect(ship.hitArr[4]).toBe(false);
 });
-test('three letters', () => {
-  expect((0, _main.reverse)('bed')).toMatch('deb');
+test('sunk returns true when all positions are hit', () => {
+  const ship = (0, _main.shipFactory)(5);
+  ship.hit(0);
+  ship.hit(1);
+  ship.hit(2);
+  ship.hit(3);
+  ship.hit(4);
+  expect(ship.isSunk()).toBe(true);
 });
-test('four letters', () => {
-  expect((0, _main.reverse)('yeet')).toMatch('teey');
-});
-test('test basic +1', () => {
-  expect((0, _main.caesarCipher)('abcdef', 1)).toMatch('bcdefg');
-});
-test('test basic -1', () => {
-  expect((0, _main.caesarCipher)('bcdefg', -1)).toMatch('abcdef');
-});
-test('test basic +6', () => {
-  expect((0, _main.caesarCipher)('bcdefg', 6)).toMatch('hijklm');
-});
-test('test spaces', () => {
-  expect(
-    (0, _main.caesarCipher)('hi the name is bum', 7)
-  ).toMatch('op aol uhtl pz ibt');
-});
-test('test z wrap', () => {
-  expect((0, _main.caesarCipher)('zebra', 3)).toMatch('cheud');
-});
-test('test case preservation', () => {
-  expect((0, _main.caesarCipher)('Hello There', 9)).toMatch('Qnuux Cqnan');
-});
-test('test punctuation', () => {
-  expect((0, _main.caesarCipher)('yes; sir!', 7)).toMatch('flz; zpy!');
+test('sunk doesnt return true when all positions arent hit', () => {
+  const ship = (0, _main.shipFactory)(5);
+  ship.hit(0);
+  ship.hit(1);
+  ship.hit(3);
+  ship.hit(4);
+  expect(ship.isSunk()).toBe(false);
 });
